@@ -1,0 +1,5 @@
+services:
+  server:
+    image: go-api-server:0.1
+    ports:
+      - 8003:8003
