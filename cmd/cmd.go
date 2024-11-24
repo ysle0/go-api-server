@@ -1,18 +1,26 @@
 package cmd
 
-import "ysl.com/go-api-server/config"
+import (
+	"ysl.com/go-api-server/config"
+	"ysl.com/go-api-server/network"
+)
 
 type Cmd struct {
 	cfg *config.Config
+	net *network.Network
 }
 
-func NewCmd(configFilePath string) *Cmd {
+func New(configFilePath string) *Cmd {
 	c := &Cmd{
-		cfg: config.NewConfig(configFilePath),
+		cfg: config.New(configFilePath),
+		net: network.New(),
 	}
 
-	port := c.cfg.Server.Port
-	println("port: ", port)
+	c.cfg.PrintEnvVarDbg()
+
+	if err := c.net.Listen(c.cfg); err != nil {
+		panic(err)
+	}
 
 	return c
 }

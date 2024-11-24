@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/naoina/toml"
@@ -12,7 +13,7 @@ type Config struct {
 	}
 }
 
-func NewConfig(filePath string) *Config {
+func New(filePath string) *Config {
 	c := new(Config)
 
 	if file, err := os.Open(filePath); err != nil {
@@ -22,4 +23,12 @@ func NewConfig(filePath string) *Config {
 	}
 
 	return c
+}
+
+func (c *Config) PrintEnvVarDbg() {
+	dbgstr := "\tConfig.PrintEnvVarDbg()> (need to be deleted in production)\n"
+	dbgstr += fmt.Sprintf("- port= %s", c.Server.Port)
+	dbgstr += "\n\n"
+
+	fmt.Println(dbgstr)
 }

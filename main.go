@@ -11,5 +11,5 @@ var configFilePathFlag = flag.String(
 
 func main() {
 	flag.Parse()
-	cmd.NewCmd(*configFilePathFlag)
+	cmd.New(*configFilePathFlag)
 }
