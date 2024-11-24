@@ -1,26 +1,15 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
+	"flag"
+
+	"ysl.com/go-api-server/cmd"
 )
 
+var configFilePathFlag = flag.String(
+	"config", "./config.toml", "config file not found")
+
 func main() {
-	portNum := 8003
-	addr := fmt.Sprintf(":%d", portNum)
-
-	fmt.Printf("start listening server at %d\n", portNum)
-
-	http.HandleFunc("/", helloWorld)
-
-	if err := http.ListenAndServe(addr, nil); err != nil {
-		println("error!!!!!!!!!!")
-		panic(err)
-	}
-
-	fmt.Println("closing server")
-}
-
-func helloWorld(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("hello world!")
+	flag.Parse()
+	cmd.NewCmd(*configFilePathFlag)
 }
