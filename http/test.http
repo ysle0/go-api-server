@@ -1,0 +1,30 @@
+@baseUrl=http://localhost:8003
+
+### getAll
+GET {{baseUrl}}
+
+### create
+POST {{baseUrl}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "yoonsang",
+  "age": 28
+}
+
+### delete
+DELETE {{baseUrl}}
+Content-Type: application/json
+
+{
+  "name": "yoonsang"
+}
+
+### update
+PUT {{baseUrl}}
+Content-Type: application/json
+
+{
+  "name": "yoonsang",
+  "updatedAge": 29
+}

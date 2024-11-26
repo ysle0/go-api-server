@@ -3,22 +3,32 @@ package cmd
 import (
 	"ysl.com/go-api-server/config"
 	"ysl.com/go-api-server/network"
+	"ysl.com/go-api-server/repository"
+	"ysl.com/go-api-server/service"
 )
 
 type Cmd struct {
-	cfg *config.Config
-	net *network.Network
+	config     *config.Config
+	network    *network.Network
+	repository *repository.Repository
+	service    *service.Service
 }
 
 func New(configFilePath string) *Cmd {
+	repository := repository.New()
+	service := service.New(repository)
+	network := network.New(service)
+
 	c := &Cmd{
-		cfg: config.New(configFilePath),
-		net: network.New(),
+		config:     config.New(configFilePath),
+		network:    network,
+		repository: repository,
+		service:    service,
 	}
 
-	c.cfg.PrintEnvVarDbg()
+	c.config.PrintEnvVarDbg()
 
-	if err := c.net.Listen(c.cfg); err != nil {
+	if err := c.network.Listen(c.config); err != nil {
 		panic(err)
 	}
 
